@@ -23,7 +23,6 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
-      - run: "$HOME/google-cloud-sdk/"
       - run: 'sudo npm install -g npm@latest'
       - run: npm install
       - run: npm run clean
