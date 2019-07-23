@@ -19,7 +19,7 @@ workflows:
           branches:
             only:
               - master
-      - on_success:
+      - success:
         requires:
           - reload_cache
           - install
@@ -51,7 +51,7 @@ jobs:
       - gulp puppeteer:build
       - npm run test
       - node ./tools/travis/removeStagedPRs.js
-  on_success:
+  success:
     docker:
       - image: circleci/node:10
     steps:
