@@ -9,11 +9,6 @@ workflows:
           branches:
             only:
               - master
-      - on_success:
-        filters:
-          branches:
-            only:
-              - master
 
 jobs:
   run_script:
@@ -21,19 +16,4 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
-      - node -v
-      - npm -v
-      - npm install
-      - npm run clean
-      - npm run build
-      - gulp puppeteer:build
-      - npm run test
-      - node ./tools/travis/removeStagedPRs.js
-  on_success:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - ./tools/travis/deploy-master.sh
-      - ./tools/travis/deploy-pr.sh
-      - ./tools/travis/flush-memcache.sh
-      - node ./tools/travis/removeStagedPRs.js
+      - run: npm -v
