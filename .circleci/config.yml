@@ -5,16 +5,17 @@ workflows:
   build: 
     jobs:
       - run_script:
-        filters:
-          branches:
-            only:
-              - master
+          filters:
+            branches:
+              only:
+                - master
       - on_success:
-        requires: - run_script
-        filters:
-          branches:
-            only:
-              - master
+          requires: 
+            - run_script
+          filters:
+            branches:
+              only:
+                - master
 
 jobs:
   run_script:
