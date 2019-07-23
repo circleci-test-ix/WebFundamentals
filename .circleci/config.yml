@@ -21,6 +21,8 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
+      - 'sudo npm install -g npm@latest'
+      - npm install
       - npm run clean
       - npm run build
       - gulp puppeteer:build
