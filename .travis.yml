@@ -14,7 +14,7 @@ workflows:
           branches:
             only:
               - master
-      - script:
+      - run_script:
         filters:
           branches:
             only:
@@ -23,12 +23,11 @@ workflows:
         requires:
           - reload_cache
           - install
-          - script
+          - run_script
         filters:
           branches:
             only:
               - master
-
 jobs:
   reload_cache:
     docker:
@@ -43,7 +42,7 @@ jobs:
     steps:
       - npm install
       - npm run clean
-  script:
+  run_script:
     docker:
       - image: circleci/node:10
     steps:
