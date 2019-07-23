@@ -10,7 +10,7 @@ workflows:
             only:
               - master
       - on_success:
-        requires: run_script
+        requires: - run_script
         filters:
           branches:
             only:
