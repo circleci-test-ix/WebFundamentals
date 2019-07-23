@@ -36,6 +36,7 @@ jobs:
     docker:
       - image: circleci/node:10
     steps:
+      - checkout
       - run: ./tools/travis/deploy-master.sh
       - run: ./tools/travis/deploy-pr.sh
       - run: ./tools/travis/flush-memcache.sh
