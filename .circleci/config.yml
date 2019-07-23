@@ -28,7 +28,6 @@ jobs:
       - run: npm run clean
       - run: npm run build
       - run: 'sudo npm install -g gulp'
-      - run: 'sudo npm install -g chalk'
       - run: gulp puppeteer:build
       - run: npm run test
       - run: node ./tools/travis/addCommitComment.js
@@ -38,6 +37,7 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
+      - run: 'sudo npm install -g chalk'
       - run: ./tools/travis/deploy-master.sh
       - run: ./tools/travis/deploy-pr.sh
       - run: ./tools/travis/flush-memcache.sh
