@@ -1,61 +1,36 @@
-version: 2.1
-
-workflows:
-  version: 2
-  build: 
-    jobs:
-      - reload_cache:
-        filters:
-          branches:
-            only:
-              - master
-      - install:
-        filters:
-          branches:
-            only:
-              - master
-      - run_script:
-        filters:
-          branches:
-            only:
-              - master
-      - after_success:
-        requires:
-          - reload_cache
-          - install
-          - run_script
-        filters:
-          branches:
-            only:
-              - master
-
-jobs:
-  reload_cache:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - checkout
-      - node_modules
-      - "$HOME/google-cloud-sdk"
-  install:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - npm install
-      - npm run clean
-  run_script:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - npm run build
-      - gulp puppeteer:build
-      - npm run test
-      - node ./tools/travis/removeStagedPRs.js
-  after_success:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - ./tools/travis/deploy-master.sh
-      - ./tools/travis/deploy-pr.sh
-      - ./tools/travis/flush-memcache.sh
-      - node ./tools/travis/removeStagedPRs.js
+language: node_js
+dist: trusty
+sudo: false
+git:
+  depth: 1
+env:
+  global:
+  - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+  - CLOUDSDK_PYTHON_SITEPACKAGES=1
+cache:
+  directories:
+  - node_modules
+  - "$HOME/google-cloud-sdk/"
+install:
+  - travis_wait ./tools/travis/install-gc-sdk.sh
+  - npm install
+  - npm run clean
+script:
+  - npm run build
+  - gulp puppeteer:build
+  - npm run test
+  - node ./tools/travis/addCommitComment.js
+after_success:
+  - ./tools/travis/deploy-master.sh
+  - ./tools/travis/deploy-pr.sh
+  - ./tools/travis/flush-memcache.sh
+  - node ./tools/travis/removeStagedPRs.js
+branches:
+  only:
+    - master
+notifications:
+  email:
+    recipients:
+      - petele@google.com
+    on_success: never
+    on_failure: always
