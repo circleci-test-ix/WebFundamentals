@@ -18,7 +18,6 @@ jobs:
       - checkout
       - run: 'sudo npm install -g npm@latest'
       - run: npm install
-      - save_cache:
       - run: npm run clean
       - run: npm run build
       - run: npm install -g gulp
