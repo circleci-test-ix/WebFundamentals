@@ -17,9 +17,6 @@ jobs:
     steps:
       - restore_cache:
         key: dependencies
-        paths: 
-          - node_modules
-          - "$HOME/google-cloud-sdk/"
       - run: 
         name: npm update
         command: 'sudo npm install -g npm@latest'
