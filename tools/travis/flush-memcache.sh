@@ -6,4 +6,4 @@
 
 # Flush the MemCache
 echo "Flushing MemCache..."
-curl https://$AE_APP_ID.appspot.com/flushMemCache
+curl https://web-central.appspot.com/flushMemCache
