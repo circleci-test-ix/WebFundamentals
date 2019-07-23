@@ -37,7 +37,7 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
-      - run: 'sudo npm install -g chalk'
+      - run: npm install
       - run: ./tools/travis/deploy-master.sh
       - run: ./tools/travis/deploy-pr.sh
       - run: ./tools/travis/flush-memcache.sh
