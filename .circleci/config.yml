@@ -28,6 +28,7 @@ jobs:
       - run: npm run clean
       - run: npm run build
       - run: 'sudo npm install -g gulp'
+      - run: 'sudo npm install -g chalk'
       - run: gulp puppeteer:build
       - run: npm run test
       - run: node ./tools/travis/addCommitComment.js
