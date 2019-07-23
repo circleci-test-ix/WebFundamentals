@@ -24,7 +24,6 @@ workflows:
           - reload_cache
           - install
           - script
-          
         filters:
           branches:
             only:
