@@ -9,7 +9,7 @@ workflows:
           branches:
             only:
               - master
-      - success:
+      - on_success:
         filters:
           branches:
             only:
@@ -21,8 +21,6 @@ jobs:
       - image: circleci/node:10
     steps:
       - checkout
-      - node_modules
-      - "$HOME/google-cloud-sdk"
       - npm install
       - npm run clean
       - npm run build
