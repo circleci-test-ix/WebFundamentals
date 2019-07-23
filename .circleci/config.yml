@@ -15,8 +15,22 @@ jobs:
     docker:
       - image: circleci/node:10
     steps:
-      - checkout
-      - run: npm install
+      - restore_cache:
+        key: dependencies
+        paths: 
+          - node_modules
+          - "$HOME/google-cloud-sdk/"
+      - run: 
+        name: npm update
+        command: 'sudo npm install -g npm@latest'
+      - run: 
+        name: install dependencies
+        command: npm install
+      - save_cache:
+        key: dependencies
+        paths:
+          - node_modules
+          - "$HOME/google-cloud-sdk/"
       - run: npm run clean
       - run: npm run build
       - run: npm install -g gulp
@@ -24,3 +38,4 @@ jobs:
       - run: gulp puppeteer:build
       - run: npm run test
       - run: node ./tools/travis/addCommitComment.js
+      
