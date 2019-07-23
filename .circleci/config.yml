@@ -18,12 +18,8 @@ jobs:
       - checkout
       - restore_cache:
         key: dependencies
-      - run: 
-        name: npm update
-        command: 'sudo npm install -g npm@latest'
-      - run: 
-        name: install dependencies
-        command: npm install
+      - run: 'sudo npm install -g npm@latest'
+      - run: npm install
       - save_cache:
         key: dependencies
         paths:
