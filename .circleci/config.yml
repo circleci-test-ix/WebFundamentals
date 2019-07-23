@@ -29,11 +29,12 @@ jobs:
       - run: gulp puppeteer:build
       - run: npm run test
       - run: node ./tools/travis/addCommitComment.js
-   on_success:
-     docker:
-       - image: circleci/node:10
-     steps:
-        run: ./tools/travis/deploy-master.sh
-        run: ./tools/travis/deploy-pr.sh
-        run: ./tools/travis/flush-memcache.sh
-        run: node ./tools/travis/removeStagedPRs.js
+
+  on_success:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - run: ./tools/travis/deploy-master.sh
+      - run: ./tools/travis/deploy-pr.sh
+      - run: ./tools/travis/flush-memcache.sh
+      - run: node ./tools/travis/removeStagedPRs.js
